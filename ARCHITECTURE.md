@@ -1,4 +1,4 @@
-# Enterprise Agentic RAG: LangGraph · Guardrails · LLM Gateway · RAGAS Evals
+# KMIT Campus Chatbot: LangGraph · Guardrails · LLM Gateway · RAGAS Evals
 
 ```mermaid
 graph LR

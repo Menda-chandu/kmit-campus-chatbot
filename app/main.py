@@ -19,7 +19,7 @@ from typing import Optional
 
 
 # Initialize FastAPI
-app = FastAPI(title="Enterprise Agentic RAG API")
+app = FastAPI(title="KMIT Campus Chatbot API")
 
 
 @app.on_event("startup")
@@ -33,7 +33,7 @@ class QueryRequest(BaseModel):
     
 @app.get("/")
 def home():
-    return {"message": "Enterprise LangGraph RAG API is live."}
+    return {"message": "KMIT Campus Chatbot API is live."}
 
 
 @app.get("/graph")

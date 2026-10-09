@@ -11,7 +11,7 @@ The project uses a **Cyclic State Machine** powered by **LangGraph**. Unlike sta
 *   **Logic**: The Planner is the entry point. It analyzes the entire conversation history and the new user message.
 *   **Decisions**:
     *   `CONVERSATIONAL`: If the user says "Hi" or asks about something already in the chat memory, it skips the expensive search process.
-    *   `TECHNICAL`: If the user asks a question about Kubernetes, Intel, or Networking, it generates a refined, optimized search query.
+    *   `CAMPUS DOCUMENTATION`: If the user asks a KMIT campus question, it generates a refined, optimized search query.
 
 ### 2. 🔍 The Retriever Node
 *   **Services**: Qdrant Cloud (Vector Search) + FlashRank (Local Semantic Reranker)
@@ -30,7 +30,7 @@ The project uses a **Cyclic State Machine** powered by **LangGraph**. Unlike sta
 ### 3. ✍️ The Responder Node
 *   **Model**: Groq (Llama 3.3 70B)
 *   **Logic**: This is the final synthesizer. It takes the retrieved documents (if any) and the conversation history to generate a natural, helpful response. 
-*   **Sources**: It is instructed to cite its sources and use only the provided context for technical answers.
+*   **Sources**: It is instructed to cite its sources and use only the provided context for campus-documentation answers.
 
 ---
 
@@ -39,7 +39,7 @@ The project uses a **Cyclic State Machine** powered by **LangGraph**. Unlike sta
 ```mermaid
 graph TD
     Start((Start)) --> Planner[Planner]
-    Planner -->|Technical Query| Retriever[Retriever]
+    Planner -->|Campus Query| Retriever[Retriever]
     Planner -->|Greeting/History| Skip((Skip Search))
     Retriever --> Rerank[FlashRank]
     Rerank --> Responder[Responder]
@@ -54,5 +54,5 @@ graph TD
 *   **State**: The `AgentState` object tracks:
     *   `messages`: The full chat history.
     *   `current_query`: The optimized search term.
-    *   `documents`: The reranked technical context.
+    *   `documents`: The reranked campus context.
     *   `plan`: A log of "thought steps" displayed in the UI.

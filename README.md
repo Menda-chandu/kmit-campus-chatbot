@@ -1,13 +1,13 @@
-# Enterprise Agentic RAG (Scalable Pipeline)
+# KMIT Campus Chatbot
 
-A production-grade, enterprise-level RAG system built with **LangGraph**, **Portkey LLM Gateway**, and **Gemini Embeddings**. The system distinguishes between technical "True Data" and random "Noisy Data" using semantic re-ranking, history-aware planning, and NeMo Guardrails for input/output safety.
+A campus chatbot built with **LangGraph**, **Portkey LLM Gateway**, and **Gemini Embeddings**. The system retrieves from uploaded campus/documentation sources using semantic re-ranking, history-aware planning, and NeMo Guardrails for input/output safety.
 
 ## Key Features
 
 - **Agentic Intelligence**: LangGraph for cyclic reasoning, multi-step planning, and conversation memory.
 - **Guardrails**: NeMo Guardrails gate blocks off-topic, jailbreak, and injection inputs before any retrieval.
 - **LLM Gateway**: Portkey routes all LLM calls with automatic fallback between primary and backup Groq keys.
-- **Enterprise Search**: Qdrant Cloud for high-performance vector search + FlashRank for local semantic reranking.
+- **Campus Search**: Qdrant Cloud for high-performance vector search + FlashRank for local semantic reranking.
 - **Gemini Embeddings**: Google `gemini-embedding-2-preview` (3072-dim) via `langchain-google-genai`.
 - **Local Document Parsing**: PDF, HTML, TXT, DOCX, PPTX parsed entirely on-device — no external OCR service.
 - **Observability**: Full trace nesting with **Pydantic Logfire** and **LangSmith** across every agent node.
@@ -167,4 +167,4 @@ streamlit run evals/app.py
 
 ---
 
-*Built for High-Scale Enterprise Document Intelligence.*
+*Built as the KMIT Campus Chatbot.*

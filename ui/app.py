@@ -28,7 +28,7 @@ except Exception as e:
 
 # --- PAGE CONFIG ---
 st.set_page_config(
-    page_title="Enterprise Agentic RAG",
+    page_title="KMIT Campus Chatbot",
     page_icon="🤖",
     layout="wide",
 )
@@ -49,19 +49,19 @@ if "messages" not in st.session_state:
 
 # --- SIDEBAR ---
 with st.sidebar:
-    st.title("🧠 Agent OS")
+    st.title("🧠 KMIT Chatbot")
     st.markdown("---")
     st.success(f"Logfire: {LOGFIRE_STATUS}")
     st.info(f"Memory ID: {st.session_state.session_id[:8]}")
     
-    if st.button("🗑️ Clear History & Memory", width="stretch", type="primary"):
+    if st.button("🗑️ Clear History & Memory", use_container_width=True, type="primary"):
         logfire.warn(f"🗑️ Memory Wipe Triggered for session: {st.session_state.session_id}")
         st.session_state.messages = []
         st.session_state.session_id = str(uuid.uuid4())
         st.rerun()
 
 # --- MAIN CHAT ---
-st.title("🤖 Enterprise Agentic Assistant")
+st.title("🤖 KMIT Campus Chatbot")
 
 
 # Display history

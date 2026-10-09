@@ -21,7 +21,7 @@ def generate_node(state: AgentState):
     if query == "CONVERSATIONAL":
         logfire.info("Generating conversational response using memory.")
         prompt = f"""
-        You are a friendly and helpful Enterprise AI Assistant.
+        You are the friendly and helpful KMIT Campus Chatbot.
         Answer the user's latest message using the CONVERSATION HISTORY below.
 
         CONVERSATION HISTORY:
@@ -31,7 +31,7 @@ def generate_node(state: AgentState):
         "{user_msg}"
         """
     else:
-        logfire.info("Generating technical RAG response.")
+        logfire.info("Generating campus RAG response.")
         max_context_chars = 25000
         full_context = ""
 
@@ -43,10 +43,10 @@ def generate_node(state: AgentState):
                 break
 
         prompt = f"""
-        You are a Senior Technical Architect.
-        Answer the question using the TECHNICAL CONTEXT provided.
+        You are the KMIT Campus Chatbot.
+        Answer the question using the CAMPUS CONTEXT provided.
 
-        TECHNICAL CONTEXT:
+        CAMPUS CONTEXT:
         {full_context}
 
         CONVERSATION HISTORY:

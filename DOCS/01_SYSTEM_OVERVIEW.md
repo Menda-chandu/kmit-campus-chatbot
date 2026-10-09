@@ -1,4 +1,4 @@
-# 🤖 Enterprise Agentic RAG: System Overview
+# 🤖 KMIT Campus Chatbot: System Overview
 
 A production-grade, state-of-the-art RAG system built for speed, scalability, and deep observability. This platform leverages **LangGraph** to handle complex reasoning and a fully local, cloud-agnostic stack for document intelligence.
 
@@ -7,9 +7,9 @@ A production-grade, state-of-the-art RAG system built for speed, scalability, an
 ## 🌟 Vision
 Most RAG systems fail because they treat every query the same. Our **Agentic RAG** distinguishes between:
 1.  **Conversational Queries**: "Hi", "Who are you?", "What did I just say?"
-2.  **Technical Queries**: "How do I configure Intel SRIOV on Kubernetes?"
+2.  **Campus Queries**: "What are the available campus facilities?"
 
-By using a **Planner-Retriever-Responder** architecture, we ensure that technical answers are always grounded in "True Data" while conversational interactions remain fluid and fast.
+By using a **Planner-Retriever-Responder** architecture, we ensure that campus answers are always grounded in the available documentation while conversational interactions remain fluid and fast.
 
 ---
 
@@ -24,7 +24,7 @@ sequenceDiagram
     User->>UI: Asks Question
     UI->>Agent: Request with thread_id
     Agent->>Agent: Planner decides intent
-    alt Technical
+    alt Campus Documentation
         Agent->>Data: Vector Search
         Data-->>Agent: Raw Chunks
         Agent->>Agent: FlashRank Local Reranking
