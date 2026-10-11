@@ -8,7 +8,10 @@ from app.services.retrieval.embedding import embed_query
 # Initialize Qdrant Client
 client = QdrantClient(
     url=settings.QDRANT_URL,
-    api_key=settings.QDRANT_API_KEY
+    api_key=settings.QDRANT_API_KEY,
+    # Avoid a remote version probe while importing the API during cold starts.
+    # Query requests still validate access to the configured cluster.
+    check_compatibility=False,
 )
 
 def search_enterprise_knowledge(query: str, limit: int = 8):

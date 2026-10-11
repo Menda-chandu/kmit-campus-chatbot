@@ -86,6 +86,8 @@ Set `GROQ_API_KEY`, `PORTKEY_API_KEY`, `GEMINI_API_KEY`, `QDRANT_API_KEY`, and
 `QDRANT_CLUSTER_ENDPOINT` in Render's environment settings. Optional Logfire
 tracing requires `LOGFIRE_TOKEN`; LangSmith tracing is disabled by default.
 The API stays on localhost inside the container, and the public port serves the chat UI.
+Guardrail embeddings run locally in batches of one with a single CPU thread to
+reduce memory use on small instances.
 
 Before asking campus questions, index KMIT documents into the Qdrant collection
 `enterprise_rag` using the same Gemini embedding model used by the app. The sample
