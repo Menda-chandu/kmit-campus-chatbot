@@ -4,6 +4,7 @@ from nemoguardrails import RailsConfig, LLMRails
 
 from app.config import settings
 from app.guardrails.colang_rules import COLANG_CONTENT, YAML_CONTENT, RAIL_INDICATORS
+from app.guardrails.index import GeminiGuardrailIndex
 
 
 _rails: LLMRails | None = None
@@ -30,13 +31,14 @@ def initialize_rails() -> None:
 
     # Remote embeddings avoid loading a second local ONNX model on small hosts.
     # The user authorized sending guardrail text to the existing Gemini API.
-    config.core.embedding_search_provider.parameters.update({
-        "embedding_engine": "google",
-        "embedding_model": "gemini-embedding-2-preview",
-        "embedding_parameters": {"api_key": settings.GEMINI_API_KEY},
-    })
+    config.core.embedding_search_provider.name = "gemini_exact"
+    config.core.embedding_search_provider.parameters = {
+        "model": "gemini-embedding-2-preview",
+        "api_key": settings.GEMINI_API_KEY,
+    }
 
     _rails = LLMRails(config, llm=guard_llm)
+    _rails.register_embedding_search_provider("gemini_exact", GeminiGuardrailIndex)
     logfire.info("🛡️ NeMo Guardrails initialised (llama-3.1-8b-instant).")
     
     

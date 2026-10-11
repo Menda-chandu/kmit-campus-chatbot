@@ -88,6 +88,7 @@ tracing requires `LOGFIRE_TOKEN`; LangSmith tracing is disabled by default.
 The API stays on localhost inside the container, and the public port serves the chat UI.
 Guardrails use the configured Gemini API for embeddings to avoid loading an
 additional local model. Chat text and guardrail intent examples are sent to Gemini.
+An exact NumPy index keeps intent matching lightweight without native index workers.
 
 Before asking campus questions, index KMIT documents into the Qdrant collection
 `enterprise_rag` using the same Gemini embedding model used by the app. The sample

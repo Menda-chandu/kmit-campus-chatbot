@@ -36,6 +36,10 @@ def main():
     child_env = os.environ.copy()
     child_env["BACKEND_URL"] = "http://127.0.0.1:8000"
     child_env.setdefault("LANGSMITH_TRACING", "false")
+    child_env["PYTHONFAULTHANDLER"] = "1"
+    for key in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
+        child_env.setdefault(key, "1")
+    child_env.setdefault("MALLOC_ARENA_MAX", "2")
 
     try:
         api = subprocess.Popen(
@@ -69,8 +73,10 @@ def main():
         )
         children.append(ui)
         while not stopped.wait(0.5):
-            if any(child.poll() is not None for child in children):
-                raise RuntimeError("A server exited; stopping the service")
+            for name, child in zip(("API", "UI"), children):
+                code = child.poll()
+                if code is not None:
+                    raise RuntimeError(f"{name} exited with code {code}; stopping the service")
         return 0
     except Exception as exc:
         print("Service startup failed: " + str(exc), flush=True)
