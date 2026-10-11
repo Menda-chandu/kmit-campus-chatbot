@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: kmit-campus-chatbot
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile.render
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: LANGSMITH_TRACING
+        value: "false"
+      - key: GROQ_API_KEY
+        sync: false
+      - key: PORTKEY_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      - key: QDRANT_CLUSTER_ENDPOINT
+        sync: false

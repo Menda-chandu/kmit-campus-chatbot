@@ -77,6 +77,25 @@ graph TD
 
 ## Getting Started
 
+### Deploy to Render
+
+[Deploy to Render](https://render.com/deploy?repo=https://github.com/Menda-chandu/kmit-campus-chatbot)
+
+The included `render.yaml` runs Streamlit and the API in one Docker service.
+Set `GROQ_API_KEY`, `PORTKEY_API_KEY`, `GEMINI_API_KEY`, `QDRANT_API_KEY`, and
+`QDRANT_CLUSTER_ENDPOINT` in Render's environment settings. Optional Logfire
+tracing requires `LOGFIRE_TOKEN`; LangSmith tracing is disabled by default.
+The API stays on localhost inside the container, and the public port serves the chat UI.
+
+Before asking campus questions, index KMIT documents into the Qdrant collection
+`enterprise_rag` using the same Gemini embedding model used by the app. The sample
+documents bundled in this repository are technical examples, not KMIT campus information.
+Portkey must have the Groq provider integrations `rag` and `brag` configured.
+Deployment does not ingest or overwrite your Qdrant data.
+
+The free Render plan can sleep when idle and has limited memory. If the combined
+app exceeds that limit, choose a larger instance in Render after reviewing its price.
+
 ### 1. Install dependencies
 
 ```powershell

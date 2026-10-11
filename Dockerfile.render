@@ -1,0 +1,18 @@
+FROM python:3.11-slim-bookworm
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc g++ libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+
+COPY requirements-prod.txt requirements-hosted.txt ./
+RUN pip install --no-cache-dir --prefer-binary -r requirements-hosted.txt
+
+COPY app/ ./app/
+COPY ui/ ./ui/
+COPY scripts/serve.py ./scripts/serve.py
+
+EXPOSE 10000
+CMD ["python", "scripts/serve.py"]

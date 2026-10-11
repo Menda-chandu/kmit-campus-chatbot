@@ -15,11 +15,9 @@ load_dotenv(dotenv_path=env_path)
 # Initialize Logfire
 try:
     token = os.getenv("LOGFIRE_TOKEN")
-    if not token:
-        print("ERROR: LOGFIRE_TOKEN is empty or None!")
-    logfire.configure(token=token)
+    logfire.configure(token=token, send_to_logfire=bool(token))
     # logfire.instrument_requests() # Disabled due to OpenTelemetry bug on Windows: MeterProvider.get_meter() got multiple values for argument 'version'
-    LOGFIRE_STATUS = "Connected & Tracing"
+    LOGFIRE_STATUS = "Connected & Tracing" if token else "Local logging"
 except Exception as e:
     print(f"Logfire Init Error in UI: {e}")
     LOGFIRE_STATUS = f"Standby (Error: {e})"
@@ -86,10 +84,11 @@ if prompt := st.chat_input("Ask about your documentation..."):
                     # DISTRIBUTED TRACE: Calling Backend
                     with logfire.span("📡 Calling RAG Backend"):
                         # Get backend URL from env, or default to local if not set
-                        base_url = os.getenv("BACKEND_URL", "http://localhost:8000")
+                        base_url = os.getenv("BACKEND_URL", "http://localhost:8000").rstrip("/")
                         url = f"{base_url}/query"
                         payload = {"q": prompt, "thread_id": st.session_state.session_id}
                         response = requests.post(url, json=payload, timeout=60)
+                        response.raise_for_status()
                         data = response.json()
                     
                     # Show Reasoning Steps from Backend

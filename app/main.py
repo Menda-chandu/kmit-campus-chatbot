@@ -7,7 +7,8 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-logfire.configure(token=os.getenv("LOGFIRE_TOKEN"))
+logfire_token = os.getenv("LOGFIRE_TOKEN")
+logfire.configure(token=logfire_token, send_to_logfire=bool(logfire_token))
 
 # Now safe to import app modules - logfire is already active
 from fastapi import FastAPI, Response
@@ -34,6 +35,11 @@ class QueryRequest(BaseModel):
 @app.get("/")
 def home():
     return {"message": "KMIT Campus Chatbot API is live."}
+
+
+@app.get("/healthz")
+def health():
+    return {"status": "ok"}
 
 
 @app.get("/graph")

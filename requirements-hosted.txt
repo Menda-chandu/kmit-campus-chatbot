@@ -1,0 +1,3 @@
+# API and chat UI, without the evaluation suite or local embedding models.
+-r requirements-prod.txt
+streamlit==1.42.0
